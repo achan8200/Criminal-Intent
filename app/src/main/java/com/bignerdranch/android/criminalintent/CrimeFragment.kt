@@ -1,13 +1,11 @@
 package com.bignerdranch.android.criminalintent
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -16,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 private const val TAG = "CrimeFragment"
 private const val ARG_CRIME_ID = "crime_id"
@@ -38,6 +37,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
         crime = Crime()
         val crimeId: UUID = arguments?.getSerializable(ARG_CRIME_ID) as UUID
         crimeDetailViewModel.loadCrime(crimeId)
@@ -68,6 +68,23 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks, TimePickerFragme
                     updateUI()
                 }
             })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_crime, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.delete_crime -> {
+                crimeDetailViewModel.deleteCrime(this.crime)
+                val i = Intent(activity, MainActivity::class.java)
+                startActivity(i)
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onStart() {

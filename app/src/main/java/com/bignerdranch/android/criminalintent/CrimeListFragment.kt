@@ -55,8 +55,7 @@ class CrimeListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_crime_list, container, false)
 
         crimeRecyclerView = view.findViewById(R.id.crime_recycler_view) as RecyclerView
-        crimeRecyclerView.layoutManager = GridLayoutManager(context, 2)
-        //crimeRecyclerView.layoutManager = LinearLayoutManager(context)
+        crimeRecyclerView.layoutManager = LinearLayoutManager(context)
         crimeRecyclerView.adapter = adapter
 
         noCrimeMessage = view.findViewById(R.id.no_crimes) as TextView

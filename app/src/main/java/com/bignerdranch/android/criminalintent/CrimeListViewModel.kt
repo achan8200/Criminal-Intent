@@ -23,5 +23,4 @@ class CrimeListViewModel : ViewModel() {
     fun addCrime(crime: Crime) {
         crimeRepository.addCrime(crime)
     }
-
 }
